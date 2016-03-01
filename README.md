@@ -7,13 +7,13 @@ This firmware is for the R1 Plus only.  If you have an older R1 printer, refer t
         Old ROBO R1 Firmware
         
         R1 Beta (Kickstarter edition with slides for the Y axis)
-        <a href="http://download.robo3d.com/firmware/R1/ROBO3D_BETA_6_10.zip" title="http://download.robo3d.com/firmware/R1/ROBO3D_BETA_6_10.zip">http://download.robo3d.com/firmware/R1/R...</a>
+        <a href="http://download.robo3d.com/firmware/R1/ROBO3D_BETA_6_10.zip">Download from Robo 3D</a>
         
         R1 with Auto Level and 5/16 inch Rods 
-        <a href="http://download.robo3d.com/firmware/R1/Auto_Level_7_17_516inch_.zip" title="http://download.robo3d.com/firmware/R1/Auto_Level_7_17_516inch_.zip">http://download.robo3d.com/firmware/R1/A...</a>
+        <a href="http://download.robo3d.com/firmware/R1/Auto_Level_7_17_516inch_.zip">Download from Robo 3D</a>
         
         R1 with Auto Level and 8mm Rods
-        <a href="http://download.robo3d.com/firmware/R1/ROBO_3D_Auto_Level_7_17_8mm.zip" title="http://download.robo3d.com/firmware/R1/ROBO_3D_Auto_Level_7_17_8mm.zip">http://download.robo3d.com/firmware/R1/R...</a>
+        <a href="http://download.robo3d.com/firmware/R1/ROBO_3D_Auto_Level_7_17_8mm.zip">Download from Robo 3D</a>
 
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ErikZalm&url=https://github.com/ErikZalm/Marlin&title=Marlin&language=&tags=github&category=software)
 
