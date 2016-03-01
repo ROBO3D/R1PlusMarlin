@@ -1,0 +1,872 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
+    <ProjectGuid>{07b459b4-8d76-4638-bc6d-a459ba2d616b}</ProjectGuid>
+    <avrdevice>atmega2560</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>Robo3dR1V2</AssemblyName>
+    <Name>Robo3dR1V2</Name>
+    <RootNamespace>Robo3dR1V2</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue>
+    </OverrideVtorValue>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <CacheFlash>true</CacheFlash>
+    <UncachedRange />
+    <BootSegment>0</BootSegment>
+    <AsfFrameworkConfig>
+      <framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <preserveEEPROM>true</preserveEEPROM>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+        <avrgcc.common.optimization.RelaxBranches>True</avrgcc.common.optimization.RelaxBranches>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>__AVR_ATmega2560__</Value>
+            <Value>ARDUINO=101</Value>
+            <Value>ARDUINO_MAIN</Value>
+            <Value>F_CPU=16000000L</Value>
+            <Value>__AVR__</Value>
+            <Value>__cplusplus</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\utility</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries</Value>
+            <Value>C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcccpp.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>__AVR_ATmega2560__</Value>
+            <Value>ARDUINO=101</Value>
+            <Value>ARDUINO_MAIN</Value>
+            <Value>F_CPU=16000000L</Value>
+            <Value>__AVR__</Value>
+            <Value>__cplusplus</Value>
+          </ListValues>
+        </avrgcccpp.compiler.symbols.DefSymbols>
+        <avrgcccpp.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\utility</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries</Value>
+            <Value>C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\</Value>
+            <Value>
+            </Value>
+          </ListValues>
+        </avrgcccpp.compiler.directories.IncludePaths>
+        <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
+        <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+        <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+        <avrgcccpp.compiler.warnings.AllWarnings>True</avrgcccpp.compiler.warnings.AllWarnings>
+        <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+      </AvrGccCpp>
+    </ToolchainSettings>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <arduino.board.name>mega_atmega2560</arduino.board.name>
+        <arduino.board.desc>Arduino Mega w/ ATmega2560 (Mega 2560)</arduino.board.desc>
+        <arduino.board.property_bag>name=Arduino Mega w/ ATmega2560 (Mega 2560)
+vid.0=0x2341
+pid.0=0x0010
+vid.1=0x2341
+pid.1=0x0042
+upload.tool=avrdude
+upload.maximum_data_size=8192
+bootloader.tool=avrdude
+bootloader.low_fuses=0xFF
+bootloader.unlock_bits=0x3F
+bootloader.lock_bits=0x0F
+build.f_cpu=16000000L
+build.core=arduino
+build.variant=mega
+build.board=AVR_MEGA2560
+menu.cpu.atmega2560=ATmega2560 (Mega 2560)
+menu.cpu.atmega2560.upload.protocol=wiring
+menu.cpu.atmega2560.upload.maximum_size=258048
+menu.cpu.atmega2560.upload.speed=115200
+menu.cpu.atmega2560.bootloader.high_fuses=0xD8
+menu.cpu.atmega2560.bootloader.extended_fuses=0xFD
+menu.cpu.atmega2560.bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+menu.cpu.atmega2560.build.mcu=atmega2560
+menu.cpu.atmega2560.build.board=AVR_MEGA2560
+menu.cpu.atmega1280=ATmega1280
+menu.cpu.atmega1280.upload.protocol=arduino
+menu.cpu.atmega1280.upload.maximum_size=126976
+menu.cpu.atmega1280.upload.speed=57600
+menu.cpu.atmega1280.bootloader.high_fuses=0xDA
+menu.cpu.atmega1280.bootloader.extended_fuses=0xF5
+menu.cpu.atmega1280.bootloader.file=atmega/ATmegaBOOT_168_atmega1280.hex
+menu.cpu.atmega1280.build.mcu=atmega1280
+menu.cpu.atmega1280.build.board=AVR_MEGA
+runtime.ide.path=C:\Program Files (x86)\Arduino
+build.system.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\system
+runtime.ide.version=157
+originalid=mega
+tools.atprogram.cmd.path=%AVRSTUDIO_EXE_PATH%\atbackend\atprogram
+tools.atprogram.cmd.setwinpath=true
+tools.atprogram.program.params.verbose=-v
+tools.atprogram.program.params.quiet=-q
+tools.atprogram.program.pattern="{cmd.path}" -d {build.mcu} {program.verbose} {program.extra_params} program -c -f "{build.path}\{build.project_name}.hex"
+tools.atprogram.program.xpattern="{cmd.path}" {AVRSTUDIO_BACKEND_CONNECTION} -d {build.mcu} {program.verbose} {program.extra_params} program -c -f "{build.path}\{build.project_name}.hex"
+version=1.5.6
+compiler.path={runtime.ide.path}/hardware/tools/avr/bin/
+compiler.c.cmd=avr-gcc
+compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD
+compiler.c.elf.flags=-w -Os -Wl,--gc-sections
+compiler.c.elf.cmd=avr-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp
+compiler.cpp.cmd=avr-g++
+compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD
+compiler.ar.cmd=avr-ar
+compiler.ar.flags=rcs
+compiler.objcopy.cmd=avr-objcopy
+compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+compiler.elf2hex.flags=-O ihex -R .eeprom
+compiler.elf2hex.cmd=avr-objcopy
+compiler.ldflags=
+compiler.size.cmd=avr-size
+build.extra_flags=
+compiler.c.extra_flags=
+compiler.c.elf.extra_flags=
+compiler.S.extra_flags=
+compiler.cpp.extra_flags=
+compiler.ar.extra_flags=
+compiler.objcopy.eep.extra_flags=
+compiler.elf2hex.extra_flags=
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{build.path}/{archive_file}" "{object_file}"
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} {compiler.objcopy.eep.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+tools.avrdude.cmd.path={runtime.ide.path}/hardware/tools/avr/bin/avrdude
+tools.avrdude.config.path={runtime.ide.path}/hardware/tools/avr/etc/avrdude.conf
+tools.avrdude.upload.params.verbose=-v -v -v -v
+tools.avrdude.upload.params.quiet=-q -q
+tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.program.params.verbose=-v -v -v -v
+tools.avrdude.program.params.quiet=-q -q
+tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.erase.params.verbose=-v -v -v -v
+tools.avrdude.erase.params.quiet=-q -q
+tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -p{build.mcu} -c{protocol} {program.extra_params} -e -Ulock:w:{bootloader.unlock_bits}:m -Uefuse:w:{bootloader.extended_fuses}:m -Uhfuse:w:{bootloader.high_fuses}:m -Ulfuse:w:{bootloader.low_fuses}:m
+tools.avrdude.bootloader.params.verbose=-v -v -v -v
+tools.avrdude.bootloader.params.quiet=-q -q
+tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{runtime.platform.path}/bootloaders/{bootloader.file}:i" -Ulock:w:{bootloader.lock_bits}:m
+build.usb_manufacturer=
+build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+vm.platform.root.path=C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\arduino15x
+upload.protocol=wiring
+upload.maximum_size=258048
+upload.speed=115200
+bootloader.high_fuses=0xD8
+bootloader.extended_fuses=0xFD
+bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+build.mcu=atmega2560
+ide.hint=Arduino 1.5 Ide
+ide.location.key=Arduino15x
+ide.location.ide.winreg=Arduino 1.5.x Application
+ide.location.sketchbook.winreg=Arduino 1.5.x Sketchbook
+ide.location.sketchbook.preferences=sketchbook.path
+ide.location.preferences=%VM_APPDATA_ROAMING%\arduino15\preferences.txt
+ide.location.preferences_fallback=%VM_APPDATA_ROAMING%\arduino\preferences.txt
+ide.default.version=150
+ide.default.package=arduino
+ide.default.platform=avr
+ide.multiplatform=true
+ide.includes=arduino.h
+ide.platformswithoutpackage=false
+ide.includes.fallback=wprogram.h
+ide.extension=ino
+ide.extension.fallback=pde
+ide.versionGTEQ=150
+ide.exe=arduino.exe
+ide.hosts=atmel
+ide.url=http://arduino.cc/en/Main/Software
+vm.debug=true
+software=ARDUINO
+ssh.user.name=root
+ssh.user.default.password=arduino
+ssh.host.wwwfiles.path=/www/sd
+build.working_directory={runtime.ide.path}
+ide.appid=arduino15x
+location.sketchbook=C:\Users\Mike\Documents\Arduino
+vm.core.include=arduino.h
+vm.boardsource.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
+runtime.platform.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
+vm.platformname.name=avr
+build.arch=AVR
+</arduino.board.property_bag>
+        <arduino.build.mcu>atmega2560</arduino.build.mcu>
+        <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
+        <arduino.build.core>arduino</arduino.build.core>
+        <arduino.upload.protocol>wiring</arduino.upload.protocol>
+        <arduino.upload.speed>115200</arduino.upload.speed>
+        <arduino.upload.maximum_size>258048</arduino.upload.maximum_size>
+        <visualmicro.application.name>arduino15x</visualmicro.application.name>
+        <visualmicro.package.name>arduino</visualmicro.package.name>
+        <visualmicro.platform.name>avr</visualmicro.platform.name>
+        <arduino.upload.port>COM2</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/yun;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/utility;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries/LiquidCrystal/src;C:/Program Files (x86)/Arduino/libraries/LiquidCrystal/src/utility;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;C:/Users/Mike/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/;c:/program files (x86)/arduino/hardware/tools/avr/avr/;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/mega;../../Robo3dR1V2;C:/Users/Sherif/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include/;</VMSETTING_IncludePaths>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+        <avrgcc.common.optimization.RelaxBranches>True</avrgcc.common.optimization.RelaxBranches>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>__AVR_ATmega2560__</Value>
+            <Value>ARDUINO=101</Value>
+            <Value>ARDUINO_MAIN</Value>
+            <Value>F_CPU=16000000L</Value>
+            <Value>__AVR__</Value>
+            <Value>__cplusplus</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\utility</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries</Value>
+            <Value>C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcccpp.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>__AVR_ATmega2560__</Value>
+            <Value>ARDUINO=101</Value>
+            <Value>ARDUINO_MAIN</Value>
+            <Value>F_CPU=16000000L</Value>
+            <Value>__AVR__</Value>
+            <Value>__cplusplus</Value>
+          </ListValues>
+        </avrgcccpp.compiler.symbols.DefSymbols>
+        <avrgcccpp.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\utility</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries\U8glib\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries\LiquidCrystal\src\utility</Value>
+            <Value>C:\Program Files (x86)\Arduino\libraries</Value>
+            <Value>C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries</Value>
+            <Value>C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers</Value>
+            <Value>C:\Users\Coby\Documents\Arduino\libraries</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\include\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\avr\</Value>
+            <Value>c:\program files (x86)\arduino\hardware\tools\avr\lib\gcc\avr\4.3.2\include\</Value>
+            <Value>
+            </Value>
+          </ListValues>
+        </avrgcccpp.compiler.directories.IncludePaths>
+        <avrgcccpp.compiler.optimization.level>Optimize (-O1)</avrgcccpp.compiler.optimization.level>
+        <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+        <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+        <avrgcccpp.compiler.warnings.AllWarnings>True</avrgcccpp.compiler.warnings.AllWarnings>
+        <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+      </AvrGccCpp>
+    </ToolchainSettings>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <arduino.board.name>mega_atmega2560</arduino.board.name>
+        <arduino.board.desc>Arduino Mega w/ ATmega2560 (Mega 2560)</arduino.board.desc>
+        <arduino.board.property_bag>name=Arduino Mega w/ ATmega2560 (Mega 2560)
+vid.0=0x2341
+pid.0=0x0010
+vid.1=0x2341
+pid.1=0x0042
+upload.tool=avrdude
+upload.maximum_data_size=8192
+bootloader.tool=avrdude
+bootloader.low_fuses=0xFF
+bootloader.unlock_bits=0x3F
+bootloader.lock_bits=0x0F
+build.f_cpu=16000000L
+build.core=arduino
+build.variant=mega
+build.board=AVR_MEGA2560
+menu.cpu.atmega2560=ATmega2560 (Mega 2560)
+menu.cpu.atmega2560.upload.protocol=wiring
+menu.cpu.atmega2560.upload.maximum_size=258048
+menu.cpu.atmega2560.upload.speed=115200
+menu.cpu.atmega2560.bootloader.high_fuses=0xD8
+menu.cpu.atmega2560.bootloader.extended_fuses=0xFD
+menu.cpu.atmega2560.bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+menu.cpu.atmega2560.build.mcu=atmega2560
+menu.cpu.atmega2560.build.board=AVR_MEGA2560
+menu.cpu.atmega1280=ATmega1280
+menu.cpu.atmega1280.upload.protocol=arduino
+menu.cpu.atmega1280.upload.maximum_size=126976
+menu.cpu.atmega1280.upload.speed=57600
+menu.cpu.atmega1280.bootloader.high_fuses=0xDA
+menu.cpu.atmega1280.bootloader.extended_fuses=0xF5
+menu.cpu.atmega1280.bootloader.file=atmega/ATmegaBOOT_168_atmega1280.hex
+menu.cpu.atmega1280.build.mcu=atmega1280
+menu.cpu.atmega1280.build.board=AVR_MEGA
+runtime.ide.path=C:\Program Files (x86)\Arduino
+build.system.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr\system
+runtime.ide.version=157
+originalid=mega
+tools.atprogram.cmd.path=%AVRSTUDIO_EXE_PATH%\atbackend\atprogram
+tools.atprogram.cmd.setwinpath=true
+tools.atprogram.program.params.verbose=-v
+tools.atprogram.program.params.quiet=-q
+tools.atprogram.program.pattern="{cmd.path}" -d {build.mcu} {program.verbose} {program.extra_params} program -c -f "{build.path}\{build.project_name}.hex"
+tools.atprogram.program.xpattern="{cmd.path}" {AVRSTUDIO_BACKEND_CONNECTION} -d {build.mcu} {program.verbose} {program.extra_params} program -c -f "{build.path}\{build.project_name}.hex"
+version=1.5.6
+compiler.path={runtime.ide.path}/hardware/tools/avr/bin/
+compiler.c.cmd=avr-gcc
+compiler.c.flags=-c -g -Os -w -ffunction-sections -fdata-sections -MMD
+compiler.c.elf.flags=-w -Os -Wl,--gc-sections
+compiler.c.elf.cmd=avr-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp
+compiler.cpp.cmd=avr-g++
+compiler.cpp.flags=-c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -MMD
+compiler.ar.cmd=avr-ar
+compiler.ar.flags=rcs
+compiler.objcopy.cmd=avr-objcopy
+compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
+compiler.elf2hex.flags=-O ihex -R .eeprom
+compiler.elf2hex.cmd=avr-objcopy
+compiler.ldflags=
+compiler.size.cmd=avr-size
+build.extra_flags=
+compiler.c.extra_flags=
+compiler.c.elf.extra_flags=
+compiler.S.extra_flags=
+compiler.cpp.extra_flags=
+compiler.ar.extra_flags=
+compiler.objcopy.eep.extra_flags=
+compiler.elf2hex.extra_flags=
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{build.path}/{archive_file}" "{object_file}"
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} {compiler.objcopy.eep.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} {compiler.elf2hex.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+tools.avrdude.cmd.path={runtime.ide.path}/hardware/tools/avr/bin/avrdude
+tools.avrdude.config.path={runtime.ide.path}/hardware/tools/avr/etc/avrdude.conf
+tools.avrdude.upload.params.verbose=-v -v -v -v
+tools.avrdude.upload.params.quiet=-q -q
+tools.avrdude.upload.pattern="{cmd.path}" "-C{config.path}" {upload.verbose} -p{build.mcu} -c{upload.protocol} -P{serial.port} -b{upload.speed} -D "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.program.params.verbose=-v -v -v -v
+tools.avrdude.program.params.quiet=-q -q
+tools.avrdude.program.pattern="{cmd.path}" "-C{config.path}" {program.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{build.path}/{build.project_name}.hex:i"
+tools.avrdude.erase.params.verbose=-v -v -v -v
+tools.avrdude.erase.params.quiet=-q -q
+tools.avrdude.erase.pattern="{cmd.path}" "-C{config.path}" {erase.verbose} -p{build.mcu} -c{protocol} {program.extra_params} -e -Ulock:w:{bootloader.unlock_bits}:m -Uefuse:w:{bootloader.extended_fuses}:m -Uhfuse:w:{bootloader.high_fuses}:m -Ulfuse:w:{bootloader.low_fuses}:m
+tools.avrdude.bootloader.params.verbose=-v -v -v -v
+tools.avrdude.bootloader.params.quiet=-q -q
+tools.avrdude.bootloader.pattern="{cmd.path}" "-C{config.path}" {bootloader.verbose} -p{build.mcu} -c{protocol} {program.extra_params} "-Uflash:w:{runtime.platform.path}/bootloaders/{bootloader.file}:i" -Ulock:w:{bootloader.lock_bits}:m
+build.usb_manufacturer=
+build.usb_flags=-DUSB_VID={build.vid} -DUSB_PID={build.pid} '-DUSB_MANUFACTURER={build.usb_manufacturer}' '-DUSB_PRODUCT={build.usb_product}'
+vm.platform.root.path=C:\Program Files (x86)\Visual Micro\Visual Micro for Arduino\Micro Platforms\arduino15x
+upload.protocol=wiring
+upload.maximum_size=258048
+upload.speed=115200
+bootloader.high_fuses=0xD8
+bootloader.extended_fuses=0xFD
+bootloader.file=stk500v2/stk500boot_v2_mega2560.hex
+build.mcu=atmega2560
+ide.hint=Arduino 1.5 Ide
+ide.location.key=Arduino15x
+ide.location.ide.winreg=Arduino 1.5.x Application
+ide.location.sketchbook.winreg=Arduino 1.5.x Sketchbook
+ide.location.sketchbook.preferences=sketchbook.path
+ide.location.preferences=%VM_APPDATA_ROAMING%\arduino15\preferences.txt
+ide.location.preferences_fallback=%VM_APPDATA_ROAMING%\arduino\preferences.txt
+ide.default.version=150
+ide.default.package=arduino
+ide.default.platform=avr
+ide.multiplatform=true
+ide.includes=arduino.h
+ide.platformswithoutpackage=false
+ide.includes.fallback=wprogram.h
+ide.extension=ino
+ide.extension.fallback=pde
+ide.versionGTEQ=150
+ide.exe=arduino.exe
+ide.hosts=atmel
+ide.url=http://arduino.cc/en/Main/Software
+vm.debug=true
+software=ARDUINO
+ssh.user.name=root
+ssh.user.default.password=arduino
+ssh.host.wwwfiles.path=/www/sd
+build.working_directory={runtime.ide.path}
+ide.appid=arduino15x
+location.sketchbook=C:\Users\Mike\Documents\Arduino
+vm.core.include=arduino.h
+vm.boardsource.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
+runtime.platform.path=C:\Program Files (x86)\Arduino\hardware\arduino\avr
+vm.platformname.name=avr
+build.arch=AVR
+</arduino.board.property_bag>
+        <arduino.build.mcu>atmega2560</arduino.build.mcu>
+        <arduino.build.f_cpu>16000000L</arduino.build.f_cpu>
+        <arduino.build.core>arduino</arduino.build.core>
+        <arduino.upload.protocol>wiring</arduino.upload.protocol>
+        <arduino.upload.speed>115200</arduino.upload.speed>
+        <arduino.upload.maximum_size>258048</arduino.upload.maximum_size>
+        <visualmicro.application.name>arduino15x</visualmicro.application.name>
+        <visualmicro.package.name>arduino</visualmicro.package.name>
+        <visualmicro.platform.name>avr</visualmicro.platform.name>
+        <arduino.upload.port>COM2</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+    <VMSETTING_IncludePaths>C:/Program Files (x86)/Arduino/hardware/arduino/avr/cores/arduino;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/yun;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/SPI/utility;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries/LiquidCrystal/src;C:/Program Files (x86)/Arduino/libraries/LiquidCrystal/src/utility;C:/Program Files (x86)/Arduino/libraries;C:/Program Files (x86)/Arduino/hardware/arduino/avr/libraries;C:/Program Files (x86)/Visual Micro/Visual Micro for Arduino/Micro Platforms/default/debuggers;C:/Users/Mike/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/;c:/program files (x86)/arduino/hardware/tools/avr/avr/include/avr/;c:/program files (x86)/arduino/hardware/tools/avr/avr/;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/;;C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/mega;../../Robo3dR1V2;C:/Users/Sherif/Documents/Arduino/libraries;c:/program files (x86)/arduino/hardware/tools/avr/lib/gcc/avr/4.8.1/include/;</VMSETTING_IncludePaths>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="cardreader.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="cardreader.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="digipot_mcp4451.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dogm_font_data_marlin.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dogm_lcd_implementation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="fastio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT800.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT800Impl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_FilamentScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_SettingsScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_StartupScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_UtilitiesScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT_Breakout_4DLCD_FT843.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT_GC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT_Transport_SPI.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_HomeScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_Images.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="language.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Marlin.ino">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MarlinSerial.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MarlinSerial.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Marlin_main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motion_control.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motion_control.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pins.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="planner.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="planner.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_PreheatScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_PrintingScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_Print_HeatingScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="qr_solve.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="qr_solve.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_ScreenBase.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_ScreenBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_ScreensManager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ROBO_Configuration.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sd2Card.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sd2Card.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sd2PinMap.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdBaseFile.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdBaseFile.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_SdCardScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFatConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFatStructs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFatUtil.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFatUtil.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFile.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdFile.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdInfo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdVolume.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SdVolume.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="speed_lookuptable.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_SplashScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stepper.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="stepper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FT843_Strings.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="temperature.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="temperature.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="thermistortables.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultralcd.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultralcd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultralcd_implementation_hitachi_HD44780.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ultralcd_st7920_u8glib_rrd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="vector_3.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="vector_3.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Visual Micro\.Robo3dR1V2.vsarduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="watchdog.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="watchdog.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_Callbacks.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_Callbacks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_Client.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_Client.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_cc3000_common.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_cc3000_common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_SPI.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_CC3000_SPI.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_evnt_handler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_evnt_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_hci.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_hci.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_host_driver_version.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_Manager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_Manager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_netapp.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_netapp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_nvmem.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_nvmem.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_security.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_security.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_socket.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_socket.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_wlan.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="WIFI_wlan.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="Robo3dR1V2.ino">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visual Micro\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlinkM.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="BlinkM.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Configuration.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ConfigurationStore.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ConfigurationStore.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Configuration_adv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="DOGMbitmaps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LiquidCrystalRus.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LiquidCrystalRus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Marlin.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>
