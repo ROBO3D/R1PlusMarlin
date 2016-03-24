@@ -102,16 +102,10 @@ class MarlinSerial //: public Stream
     
     FORCE_INLINE void write(uint8_t c)
     {
-		// ROBO_WIFI
-		if (!wifi_serialPrint)
-		{
-			wifi_client->enqueueChar(c);			
-		}
-		
-		while (!((M_UCSRxA) & (1 << M_UDREx)))
-			;
+      while (!((M_UCSRxA) & (1 << M_UDREx)))
+        ;
 
-		M_UDRx = c;
+      M_UDRx = c;
     }
     
     
@@ -142,27 +136,15 @@ class MarlinSerial //: public Stream
     
     FORCE_INLINE void write(const char *str)
     {
-		while (*str)
-			write(*str++);
-		
-		// ROBO_WIFI	
-		if (!wifi_serialPrint)
-		{
-			wifi_client->sendStr();
-		}
+      while (*str)
+        write(*str++);
     }
 
 
     FORCE_INLINE void write(const uint8_t *buffer, size_t size)
     {
-		while (size--)
-			write(*buffer++);
-		
-		// ROBO_WIFI
-		if (!wifi_serialPrint)
-		{
-			wifi_client->sendStr();
-		}
+      while (size--)
+        write(*buffer++);
     }
 
     FORCE_INLINE void print(const String &s)
@@ -170,19 +152,12 @@ class MarlinSerial //: public Stream
       for (int i = 0; i < (int)s.length(); i++) {
         write(s[i]);
       }
-	  
-	  // ROBO_WIFI
-	  if (!wifi_serialPrint)
-	  {
-		  wifi_client->sendStr();
-	  }
     }
     
     FORCE_INLINE void print(const char *str)
     {
       write(str);
     }
-	
     void print(char, int = BYTE);
     void print(unsigned char, int = BYTE);
     void print(int, int = DEC);
@@ -201,11 +176,6 @@ class MarlinSerial //: public Stream
     void println(unsigned long, int = DEC);
     void println(double, int = 2);
     void println(void);
-	
-	uint8_t wifi_serialPrint;
-	
-	// ROBO_WIFI
-	SFE_CC3000_Client* wifi_client;
 };
 
 extern MarlinSerial MSerial;

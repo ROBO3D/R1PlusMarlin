@@ -4,7 +4,6 @@
 #ifdef SDSUPPORT
 
 #define MAX_DIR_DEPTH 10
-#define MAX_LINES_PER_CACHE 17
 
 #include "SdFile.h"
 enum LsAction {LS_SerialPrint,LS_Count,LS_GetFilename};
@@ -14,7 +13,7 @@ public:
   CardReader();
   
   void initsd();
-  bool write_command(char *buf, uint8_t* linesCounter);
+  void write_command(char *buf);
   //files auto[0-9].g on the sd card are performed in a row
   //this is to delay autostart and hence the initialisaiton of the sd card to some seconds after the normal init, so the device is available quick after a reset
 

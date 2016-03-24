@@ -27,7 +27,6 @@
  * \file
  * \brief Sd2Card class for V2 SD/SDHC cards
  */
-#include "FT_Breakout_4DLCD_FT843.h"
 #include "SdFatConfig.h"
 #include "Sd2PinMap.h"
 #include "SdInfo.h"

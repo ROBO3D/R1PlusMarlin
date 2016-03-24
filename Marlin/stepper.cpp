@@ -975,7 +975,6 @@ void st_synchronize()
     manage_heater();
     manage_inactivity();
     lcd_update();
-	FT843_screenLoop();
   }
 }
 

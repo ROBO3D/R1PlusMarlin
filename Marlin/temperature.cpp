@@ -311,7 +311,6 @@ void PID_autotune(float temp, int extruder, int ncycles)
       return;
     }
     lcd_update();
-	FT843_screenLoop();
   }
 }
 

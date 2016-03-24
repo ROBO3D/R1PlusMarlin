@@ -16,14 +16,11 @@
 #include <avr/pgmspace.h>
 #include <avr/eeprom.h>
 #include <avr/interrupt.h>
-#include <avr/wdt.h>
 
 
 #include "fastio.h"
 #include "Configuration.h"
 #include "pins.h"
-// ROBO_WIFI
-#include "WIFI_Manager.h"
 
 #ifndef AT90USB
 #define  HardwareSerial_h // trick to disable the standard HWserial
@@ -98,12 +95,6 @@ FORCE_INLINE void serialprintPGM(const char *str)
   {
     MYSERIAL.write(ch);
     ch=pgm_read_byte(++str);
-  }
-  
-  // ROBO_WIFI
-  if (!MYSERIAL.wifi_serialPrint)
-  {
-	  MYSERIAL.wifi_client->sendStr();
   }
 }
 
@@ -190,7 +181,6 @@ extern float delta[3];
 void prepare_move();
 void kill();
 void Stop();
-void FT843_screenLoop();
 
 bool IsStopped();
 
@@ -198,12 +188,6 @@ void enquecommand(const char *cmd); //put an ASCII command at the end of the cur
 void enquecommand_P(const char *cmd); //put an ASCII command at the end of the current buffer, read from flash
 void prepare_arc_move(char isclockwise);
 void clamp_to_software_endstops(float target[3]);
-
-uint8_t isHeatingComplete();
-void clearHeatingFlag();
-
-uint8_t getStartUpSequence();
-void setStartupSequence(uint8_t val);
 
 void refresh_cmd_timeout(void);
 
@@ -239,10 +223,6 @@ extern int fanSpeed;
 extern int ValvePressure;
 extern int EtoPPressure;
 #endif
-
-// ROBO_WIFI
-extern SFE_CC3000_Client* wifi_client;
-extern void InitFT843Screen();
 
 #ifdef FAN_SOFT_PWM
 extern unsigned char fanSpeedSoftPwm;

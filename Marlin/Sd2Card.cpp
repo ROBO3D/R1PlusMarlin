@@ -203,42 +203,15 @@ uint32_t Sd2Card::cardSize() {
     return 0;
   }
 }
-
-uint8_t CSFlag = 0;
-
 //------------------------------------------------------------------------------
 void Sd2Card::chipSelectHigh() {
   digitalWrite(chipSelectPin_, HIGH);
-  
-  if (CSFlag == 1)
-  {
-	  digitalWrite(49, LOW); // Ramps, pin 49
-	  CSFlag = 0;
-  }
-  
-  // ROBO_WIFI
-  if (CSFlag == 2)
-  {
-	  digitalWrite(CC3000_CS, LOW);
-	  CSFlag = 0;
-  }
 }
 //------------------------------------------------------------------------------
 void Sd2Card::chipSelectLow() {
 #ifndef SOFTWARE_SPI
   spiInit(spiRate_);
 #endif  // SOFTWARE_SPI
-  if (!digitalRead(FT_CS_PIN))
-	  CSFlag = 1;
-  
-  // ROBO_WIFI
-  if (!digitalRead(CC3000_CS))
-	  CSFlag = 2;
-  
-  digitalWrite(FT_CS_PIN, HIGH);
-  // ROBO_WIFI
-  digitalWrite(CC3000_CS, HIGH);
-  
   digitalWrite(chipSelectPin_, LOW);
 }
 //------------------------------------------------------------------------------

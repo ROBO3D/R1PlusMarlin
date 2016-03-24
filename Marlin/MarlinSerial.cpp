@@ -96,8 +96,6 @@ void MarlinSerial::begin(long baud)
   sbi(M_UCSRxB, M_RXENx);
   sbi(M_UCSRxB, M_TXENx);
   sbi(M_UCSRxB, M_RXCIEx);
-  
-  wifi_serialPrint = 1;
 }
 
 void MarlinSerial::end()
