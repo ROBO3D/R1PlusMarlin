@@ -74,6 +74,8 @@ float max_z_jerk;
 float max_e_jerk;
 float mintravelfeedrate;
 unsigned long axis_steps_per_sqr_second[NUM_AXIS];
+unsigned int encoder_steps_per_menu_item = 7;
+unsigned int encoder_pulses_per_step = 2;
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 // this holds the required transform to compensate for bed level

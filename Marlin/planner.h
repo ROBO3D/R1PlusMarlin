@@ -117,6 +117,9 @@ extern float max_z_jerk;
 extern float max_e_jerk;
 extern float mintravelfeedrate;
 extern unsigned long axis_steps_per_sqr_second[NUM_AXIS];
+extern unsigned int encoder_steps_per_menu_item;
+extern unsigned int encoder_pulses_per_step;
+
 
 #ifdef AUTOTEMP
     extern bool autotemp_enabled;

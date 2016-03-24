@@ -174,61 +174,97 @@ static void lcd_implementation_status_screen()
  static unsigned char fan_rot = 0;
  
  u8g.setColorIndex(1);	// black on white
- 
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen_bmp);
  // Symbols menu graphics, animated fan
- if ((blink % 2) &&  fanSpeed )	u8g.drawBitmapP(9,1,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen0_bmp);
-	else u8g.drawBitmapP(9,1,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen1_bmp);
- 
+ //if ((blink % 2) &&  fanSpeed )	u8g.drawBitmapP(9,1,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen0_bmp);
+//	else u8g.drawBitmapP(9,1,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen1_bmp);
+// u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen2_bmp);
  #ifdef SDSUPPORT
  //SD Card Symbol
- u8g.drawBox(42,42,8,7);
- u8g.drawBox(50,44,2,5);
- u8g.drawFrame(42,49,10,4);
- u8g.drawPixel(50,43);
+ //u8g.drawBox(42,42,8,7);
+ //u8g.drawBox(50,44,2,5);
+ //u8g.drawFrame(42,49,10,4);
+ //u8g.drawPixel(50,43);
  // Progress bar
- u8g.drawFrame(54,49,73,4);
+ //u8g.drawFrame(54,49,73,4);
  
  // SD Card Progress bar and clock
  u8g.setFont(FONT_STATUSMENU);
  
- if (IS_SD_PRINTING)
-   {
-	// Progress bar
-	u8g.drawBox(55,50, (unsigned int)( (71 * card.percentDone())/100) ,2);
-   }
-    else {
-			// do nothing
-		 }
+
+// Progress bar
+u8g.setPrintPos(9,35);
+u8g.print(card.percentDone());
+u8g.print("%");
+u8g.drawFrame(4,23,50,4);
+if (IS_SD_PRINTING) {
+	u8g.drawBox(5,24, (unsigned int)( (50 * card.percentDone())/100) ,3);
+}
+
+ static uint16_t oldtime=0;
  
- u8g.setPrintPos(80,47);
  if(starttime != 0)
     {
-        uint16_t time = millis()/60000 - starttime/60000;
+		if (IS_SD_PRINTING) {
+            u8g.setPrintPos(82,33);
+			uint16_t time = millis()/60000 - starttime/60000;
+			u8g.print(itostr2(time/60));
+			u8g.print(':');
+			u8g.print(itostr2(time%60));
+			oldtime = time;
+            
+            int remainingTime = card.timeEstimate - time;
+            if (remainingTime < 0) {
+                remainingTime = 0;
+            }
+            
+            u8g.setPrintPos(82,57);
+            if (remainingTime > 0) {
+                u8g.print(itostr2((remainingTime)/60));
+                u8g.print(':');
+                u8g.print(itostr2((remainingTime)%60));
+            } else {
+                u8g.setPrintPos(82,57);
+                lcd_printPGM(PSTR("--:--"));
+            }
 
-		u8g.print(itostr2(time/60));
-		u8g.print(':');
-		u8g.print(itostr2(time%60));
+            
+		} else {
+            u8g.setPrintPos(82,33);
+			u8g.print(itostr2(oldtime/60));
+			u8g.print(':');
+			u8g.print(itostr2(oldtime%60));
+            u8g.setPrintPos(82,57);
+            lcd_printPGM(PSTR("--:--"));
+		}
+		
     }else{
+            u8g.setPrintPos(82,33);
 			lcd_printPGM(PSTR("--:--"));
+            u8g.setPrintPos(82,57);
+            //u8g.print(itostr2(encoder_steps_per_menu_item));
+            lcd_printPGM(PSTR("--:--"));
 		 }
  #endif
  
  // Extruder 1
  u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(6,6);
- u8g.print(itostr3(int(degTargetHotend(0) + 0.5)));
- lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
- u8g.setPrintPos(6,27);
+ //u8g.setPrintPos(6,12);
+ //u8g.print(itostr3(int(degTargetHotend(0) + 0.5)));
+ //lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
+ u8g.setPrintPos(3,55);
  u8g.print(itostr3(int(degHotend(0) + 0.5)));
- lcd_printPGM(PSTR(LCD_STR_DEGREE " "));
+ lcd_printPGM(PSTR(LCD_STR_DEGREE "C"));
+
+  /*
  if (!isHeatingHotend(0)) u8g.drawBox(13,17,2,2);
 	else
 		{
 		 u8g.setColorIndex(0);	// white on black
-		 u8g.drawBox(13,17,2,2);
+		 //u8g.drawBox(13,17,2,2);
 		 u8g.setColorIndex(1);	// black on white
 		}
- 
+
  // Extruder 2
  u8g.setFont(FONT_STATUSMENU);
  #if EXTRUDERS > 1
@@ -330,29 +366,430 @@ static void lcd_implementation_status_screen()
  u8g.setPrintPos(12,48);
  u8g.print(itostr3(feedmultiply));
  u8g.print('%');
-
+*/
  // Status line
+ u8g.setColorIndex(0);
  u8g.setFont(FONT_STATUSMENU);
- u8g.setPrintPos(0,61);
- u8g.print(lcd_status_message);
+ u8g.setPrintPos(2,7);
+ 
+ 
+if (card.filename && card.sdprinting) {
+	u8g.print("Printing:");
+	//u8g.print(card.longFilename);
+	u8g.print(card.filename);
+	
+} else if(card.filename && card.changingFilament) {
+	u8g.print("Change Filament");
+}
+ else if(int(degTargetHotend(0)) > 0 && int(degTargetHotend(0))-int(degHotend(0)) > 10 ) {
+	LCD_MESSAGEPGM(MSG_HEATING);
+	u8g.print(lcd_status_message);
+} else if(int(degTargetHotend(0)) > 0 && int(degTargetHotend(0))-int(degHotend(0)) < 10 ) {
+	LCD_MESSAGEPGM(MSG_HEATING_COMPLETE);
+	u8g.print(lcd_status_message);
+}else {
+	LCD_MESSAGEPGM(WELCOME_MSG);
+	u8g.print(lcd_status_message);
+}
+
+
+// u8g.drawFrame(0,0,128,64);
+ //u8g.drawHLine(0,32,128);
+// u8g.drawVLine(43,0,63);
+// u8g.drawVLine(86,0,63);
+ //   void drawVLine(u8g_uint_t x, u8g_uint_t y, u8g_uint_t h) { u8g_DrawVLine(&u8g, x, y, h); }
+ 
+}
+static void lcd_implementation_main_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_screen2_bmp);
+}
+static void lcd_implementation_axis_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,axis_screen_bmp);
+ u8g.setColorIndex(0);
+ u8g.setPrintPos(1, 14);
+ u8g.print(VERSION_STRING);
+}
+static void lcd_implementation_wizard_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.setPrintPos(3,55);
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,wizard_screen_bmp);
+}
+// START GLCD GRAPHIC PLACEMENT
+
+static void lcd_implementation_bed_wizard_screen1()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+ //u8g.drawVLine(43,0,63);
+ //u8g.drawVLine(86,0,63);
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD1_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD1_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD1_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_WIZARD1_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_WIZARD1_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_WIZARD1_6);
+ 
+ //u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,wizard_screen_bmp);
+}
+static void lcd_implementation_bed_wizard_screen2()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+ //u8g.drawVLine(43,0,63);
+ //u8g.drawVLine(86,0,63);
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD2_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD2_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD2_3);
+ 
+u8g.setPrintPos(9,35);
+u8g.drawFrame(4,45,100,4);
+u8g.drawBox(5,46, (unsigned int)( (100 * degHotend(0))/98) ,3); //TODO: add temp reading
+ 
+ //u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,wizard_screen_bmp);
+}
+static void lcd_implementation_bed_wizard_screen3()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128); 
+ u8g.drawHLine(0,10,128); 
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD3_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD3_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD3_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_WIZARD3_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_WIZARD3_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_WIZARD3_6);
+ 
+}
+static void lcd_implementation_bed_wizard_screen4()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128); 
+ u8g.drawHLine(0,10,128); 
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD4_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD3_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD3_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_WIZARD3_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_WIZARD3_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_WIZARD3_6);
+}
+static void lcd_implementation_bed_wizard_screen5()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128); 
+ u8g.drawHLine(0,10,128); 
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD5_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD3_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD3_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_WIZARD3_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_WIZARD3_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_WIZARD3_6);
+}
+static void lcd_implementation_bed_wizard_screen6()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128); 
+ u8g.drawHLine(0,10,128); 
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_WIZARD6_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_WIZARD6_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_WIZARD6_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_WIZARD6_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_WIZARD6_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_WIZARD6_6);
+}
+
+static void lcd_implementation_clean_wizard_screen1()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD1_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_CLEAN_WIZARD1_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_CLEAN_WIZARD1_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_CLEAN_WIZARD1_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_CLEAN_WIZARD1_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_CLEAN_WIZARD1_6);
+}
+static void lcd_implementation_clean_wizard_screen2()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD2_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_CLEAN_WIZARD2_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_CLEAN_WIZARD2_3);
+ 
+u8g.setPrintPos(9,35);
+u8g.drawFrame(4,45,100,4);
+u8g.drawBox(5,46, (unsigned int)( (100 * degHotend(0))/210) ,3); //TODO: add temp reading
+
+
+}
+static void lcd_implementation_clean_wizard_screen3()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD3_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_CLEAN_WIZARD3_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_CLEAN_WIZARD3_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_CLEAN_WIZARD3_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_CLEAN_WIZARD3_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_CLEAN_WIZARD3_6);
+ 
+//u8g.setPrintPos(9,35);
+//u8g.drawFrame(4,45,100,4);
+//u8g.drawBox(5,46, (unsigned int)( (50+( 220-degHotend(0)/100*50) )) ,3);
+}
+static void lcd_implementation_clean_wizard_screen4()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD4_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_CLEAN_WIZARD4_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_CLEAN_WIZARD4_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_CLEAN_WIZARD4_4);
+ u8g.setPrintPos(2,11+32);
+ u8g.print(MSG_CLEAN_WIZARD4_5);
+ u8g.setPrintPos(2,11+40);
+ u8g.print(MSG_CLEAN_WIZARD4_6);
+}
+static void lcd_implementation_clean_wizard_screen5()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD5_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_CLEAN_WIZARD5_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_CLEAN_WIZARD5_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_CLEAN_WIZARD5_4);
+}
+static void lcd_implementation_clean_wizard_screen6()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD6_1);
+
+}
+static void lcd_implementation_clean_wizard_screen7()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_CLEAN_WIZARD7_1);
 
 }
 
-static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, char pre_char, char post_char)
+static void lcd_implementation_extrude_screen1()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_EXTRUDE1_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_EXTRUDE1_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_EXTRUDE1_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_EXTRUDE1_4);
+}
+
+static void lcd_implementation_extrude_screen2()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_EXTRUDE2_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_EXTRUDE2_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_EXTRUDE2_3);
+ 
+u8g.setPrintPos(9,35);
+u8g.drawFrame(4,45,100,4);
+u8g.drawBox(5,46, (unsigned int)( (100 * degHotend(0))/220) ,3); //TODO: add temp reading
+
+}
+
+static void lcd_implementation_extrude_screen3()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawFrame(0,0,128,64);
+ u8g.drawHLine(0,54,128);
+ u8g.drawHLine(0,10,128); 
+
+ u8g.setPrintPos(4,9);
+ u8g.print(MSG_EXTRUDE3_1);
+ u8g.setPrintPos(2,11+8);
+ u8g.print(MSG_EXTRUDE3_2);
+ u8g.setPrintPos(2,11+16);
+ u8g.print(MSG_EXTRUDE3_3);
+ u8g.setPrintPos(2,11+24);
+ u8g.print(MSG_EXTRUDE3_4);
+
+}
+
+static void lcd_implementation_temperature_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,temperature_screen_bmp);
+ 
+ u8g.setPrintPos(24,20);
+ u8g.print("Temp:");
+ u8g.print(itostr3(degHotend(0)));
+ u8g.print(LCD_STR_DEGREE "C");
+ 
+ u8g.setPrintPos(24,32);
+ u8g.drawFrame(24,22,80,4);
+ unsigned int tempProgress = 80 * degHotend(0)/220; 
+ if (tempProgress > 79) {
+    tempProgress = 79;
+    }
+ u8g.drawBox(25,23, tempProgress ,3);
+}
+
+static void lcd_implementation_dial_sensitivity_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,button_sensitivity_screen_bmp);
+ 
+ u8g.setPrintPos(2,9+8);
+ u8g.print(MSG_DIAL_SENSITIVITY_1);
+ u8g.setPrintPos(2,9+16);
+ u8g.print(MSG_DIAL_SENSITIVITY_2);
+ u8g.setPrintPos(2,9+24);
+ u8g.print(MSG_DIAL_SENSITIVITY_3);
+ 
+ u8g.setPrintPos(8,10+32);
+ if (encoder_steps_per_menu_item < 7) {
+    u8g.print("Sensitivity - High");
+ } else {
+    u8g.print("Sensitivity - Low");
+ }
+}
+
+static void lcd_implementation_tune_screen()
+{
+ u8g.setColorIndex(1);	// black on white
+ u8g.drawBitmapP(0,0,STATUS_SCREENBYTEWIDTH,STATUS_SCREENHEIGHT,status_tune_bmp);
+}
+
+
+
+static void lcd_implementation_drawmenu_generic2(uint8_t row, const char* pstr, char pre_char, char post_char)
 {
     char c;
-    
+    int columnSpace;
     uint8_t n = LCD_WIDTH - 1 - 2;
-		
+    
+		if (row < 2) {
+		  columnSpace = 32-9;
+		} else {
+		  columnSpace = 64-9;
+		}
+                
 		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ))
 		   {
 			u8g.setColorIndex(1);		// black on white
-			u8g.drawBox (0, row*DOG_CHAR_HEIGHT + 3, 128, DOG_CHAR_HEIGHT);
+			u8g.drawBox ((row+1)%3 *43, columnSpace, 42, 9);
 			u8g.setColorIndex(0);		// following text must be white on black
 		   } else u8g.setColorIndex(1); // unmarked text is black on white
 		
 		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
-		if (pre_char != '>') u8g.print(pre_char); else u8g.print(' ');	// Row selector is obsolete
+		u8g.setPrintPos(1 + ((row+1)%3)*43, 8 + columnSpace);
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
 
 
     while( (c = pgm_read_byte(pstr)) != '\0' )
@@ -370,15 +807,270 @@ static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, c
 		u8g.setColorIndex(1);		// restore settings to black on white
 }
 
+
+static void lcd_implementation_drawmenu_generic(uint8_t row, const char* pstr, char location, char pre_char, char post_char)
+{
+    char c;
+    int columnSpace;
+	int bumpx;
+    uint8_t n = LCD_WIDTH - 1;
+
+		
+	if (location == 'm') //m is the main menu
+	{
+		if (row < 2) {
+		  columnSpace = 32-9;
+		} else {
+		  columnSpace = 64-9;
+		}
+                
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ))
+		   {
+			u8g.setColorIndex(1);		// black on white
+			u8g.drawBox ((row+1)%3 *43, columnSpace, 42, 9);
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		   
+		if (row == 2) {
+			bumpx = 0; //control
+		} else if (row == 3) {
+			bumpx = 3; //wizard
+		} else if (row == 4){
+			bumpx = 2; //status
+		} else {
+			bumpx = 0; //others
+		}
+		//u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		u8g.setPrintPos(1 + ((row+1)%3)*43 + bumpx, 8 + columnSpace);
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+	
+	} else if (location == 'a') { //a is the axis menu
+
+		if (row < 2) {
+		  columnSpace = 32-12;
+		} else {
+		  columnSpace = 64-19;
+		}
+                
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ) )
+		   {
+			u8g.setColorIndex(1);		// black on white
+			if (row == 5) {
+				u8g.drawBox (42, columnSpace+9, 44, 9);
+			} else { 
+				u8g.drawBox ((row+1)%3 *43, columnSpace, 42, 9);
+			}
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		if (row == 5) {
+			u8g.setPrintPos(52, 17 + columnSpace);
+		} else {
+			u8g.setPrintPos(1 + ((row+1)%3)*43, 8 + columnSpace);
+		}
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+	
+	
+	} else if (location == 'w') { //w is the wizard menu
+		//u8g.drawBox (40, 54, 41, 12);
+		if (row < 2) {
+		  columnSpace = 32+13;
+		} else {
+		  columnSpace = 64-16;
+		}
+                
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ) )
+		   {
+			u8g.setColorIndex(1);		// black on white
+			if (row == 2) {
+				u8g.drawBox (40, 54, 41, 12);
+			} else if(row == 0) { 
+				u8g.drawBox (0, columnSpace, 62, 9);
+			} else if(row == 1) {
+				u8g.drawBox (62, columnSpace, 66, 9);
+
+			}
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		if (row == 2) {
+			u8g.setPrintPos(50, 63);
+		} else if(row == 0) {
+			u8g.setPrintPos(6, 8 + columnSpace);
+		} else if(row == 1) {
+			u8g.setPrintPos(64, 8 + columnSpace);
+		}
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+	
+	} else if (location == 'b') { //b is the bed level wizard menu
+		//u8g.drawBox (40, 54, 41, 12);
+
+		  columnSpace = 64-9;
+
+                
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ) )
+		   {
+			u8g.setColorIndex(1);		// black on white
+			if (row == 2) {
+				u8g.drawBox (40, 54, 41, 12);
+			} else if(row == 0) { 
+				u8g.drawBox (0, columnSpace, 64, 9);
+			} else if(row == 1) {
+				u8g.drawBox (64, columnSpace, 64, 9);
+
+			}
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		if (row == 2) {
+			u8g.setPrintPos(50, 63);
+		} else if(row == 0) {
+			u8g.setPrintPos(6, 8 + columnSpace);
+		} else if(row == 1) {
+			u8g.setPrintPos(71, 8 + columnSpace);
+		}
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+	
+	} else if (location == 't') { //t is the temp menu
+		if (row < 1) {
+		  columnSpace = 45+6;
+		} else {
+		  columnSpace = 64-5;
+		}
+		u8g.drawFrame(0, 47, 128, 9);
+		u8g.setColorIndex(1);
+		if(int(degTargetHotend(0)) > 0 && int(degTargetHotend(0))-int(degHotend(0)) > 10 ) {
+			u8g.setPrintPos(24, 35);
+			u8g.print(MSG_HEATING);
+		}
+		if(int(degTargetHotend(0)) > 0 && int(degTargetHotend(0))-int(degHotend(0)) < 10 ) {
+			u8g.setPrintPos(24, 35);
+			u8g.print(MSG_HEATING_COMPLETE);
+		}
+		if(int(degTargetHotend(0)) == 0 && int(degHotend(0)) > 40 ) {
+			u8g.setPrintPos(24, 35);
+			u8g.print(MSG_COOLINGDOWN);
+		}
+		if(int(degTargetHotend(0)) == 0 && int(degHotend(0)) < 40 ) {
+			u8g.setPrintPos(24, 35);
+			u8g.print(MSG_COOLEDDOWN);
+		}
+		
+		/*else if(int(degTargetHotend(0)) > 0 && int(degTargetHotend(0))-int(degHotend(0)) < 10 ) {
+			u8g.setPrintPos(40, 55);
+			u8g.print(WELCOME_MSG);
+		}else {
+			u8g.setColorIndex(0);
+			//LCD_MESSAGEPGM(WELCOME_MSG);
+			//u8g.print(lcd_status_message);
+		}*/
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ) )
+		   {
+			u8g.setColorIndex(1);		// black on white
+			u8g.drawBox (0, columnSpace-4, 128, 9);
+            
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		if (row == 1) {
+        u8g.setPrintPos(50, 4 + columnSpace);
+			//u8g.setPrintPos(50, 63);
+		} else if(row == 0) {
+			u8g.setPrintPos(41, 4 + columnSpace);
+		}
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+
+		
+	} else if (location == 's') { //s is the button Sensitivity
+		if (row < 1) {
+		  columnSpace = 43+6;
+		} else {
+		  columnSpace = 64-5;
+		}
+		u8g.drawFrame(0, 45, 128, 11);
+		u8g.setColorIndex(1);
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ) )
+		   {
+			u8g.setColorIndex(1);		// black on white
+			u8g.drawBox (0, columnSpace-4, 128, 11);
+            
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		if (row == 1) {
+        u8g.setPrintPos(50, 4 + columnSpace);
+			//u8g.setPrintPos(50, 63);
+		} else if(row == 0) {
+			u8g.setPrintPos(43, 4 + columnSpace);
+		}
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
+
+	} else {
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ))
+		   {
+			u8g.setColorIndex(1);		// black on white
+			u8g.drawBox (0, row*DOG_CHAR_HEIGHT + 3, 128, DOG_CHAR_HEIGHT);
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
+		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print(' ');	// Row selector is obsolete
+	}
+
+    while( (c = pgm_read_byte(pstr)) != '\0' )
+    {
+		u8g.print(c);
+        pstr++;
+        n--;
+    }
+    while(n--){
+					u8g.print(' ');
+		}
+	   
+		u8g.print(post_char);
+		u8g.print(' ');
+		u8g.setColorIndex(1);		// restore settings to black on white
+		
+}
+
 static void lcd_implementation_drawmenu_setting_edit_generic(uint8_t row, const char* pstr, char pre_char, char* data)
 {
     static unsigned int fkt_cnt = 0;
+	int columnSpace;
 	char c;
     uint8_t n = LCD_WIDTH - 1 - 2 - strlen(data);
 		
+		//u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
+		//u8g.print(pre_char);
+		
+	if (1)
+	{
+		if (row < 2) {
+		  columnSpace = 32-9;
+		} else {
+		  columnSpace = 64-9;
+		}
+                
+		if ((pre_char == '>') || (pre_char == LCD_STR_UPLEVEL[0] ))
+		   {
+			u8g.setColorIndex(1);		// black on white
+			u8g.drawBox ((row+1)%3 *43, columnSpace, 42, 9);
+			u8g.setColorIndex(0);		// following text must be white on black
+		   } else u8g.setColorIndex(1); // unmarked text is black on white
+		
 		u8g.setPrintPos(0 * DOG_CHAR_WIDTH, (row + 1) * DOG_CHAR_HEIGHT);
-		u8g.print(pre_char);
+		u8g.setPrintPos(1 + ((row+1)%3)*43, 8 + columnSpace);
+		//if (pre_char != '>') u8g.print(pre_char); else u8g.print('~');	// Row selector is obsolete
 	
+	}
+		
+		
+		
     while( (c = pgm_read_byte(pstr)) != '\0' )
     {
 			u8g.print(c);
@@ -387,13 +1079,13 @@ static void lcd_implementation_drawmenu_setting_edit_generic(uint8_t row, const 
         n--;
     }
 	
-		u8g.print(':');
+		/*u8g.print(':');
 
     while(n--){
 					u8g.print(' ');
 			  }
 
-		u8g.print(data);
+		u8g.print(data);*/
 }
 
 static void lcd_implementation_drawmenu_setting_edit_generic_P(uint8_t row, const char* pstr, char pre_char, const char* data)
@@ -421,40 +1113,42 @@ static void lcd_implementation_drawmenu_setting_edit_generic_P(uint8_t row, cons
 		lcd_printPGM(data);
 }
 
-#define lcd_implementation_drawmenu_setting_edit_int3_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', itostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_int3(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', itostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float3_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float3(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float32_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr32(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float32(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr32(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float5_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float5(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float52_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr52(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float52(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr52(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float51_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr51(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_float51(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr51(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_long5_selected(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_long5(row, pstr, pstr2, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_bool_selected(row, pstr, pstr2, data) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, '>', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
-#define lcd_implementation_drawmenu_setting_edit_bool(row, pstr, pstr2, data) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, ' ', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
+
+
+#define lcd_implementation_drawmenu_setting_edit_int3_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', itostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_int3(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', itostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float3_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float3(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float32_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr32(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float32(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr32(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float5_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float5(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float52_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr52(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float52(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr52(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float51_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr51(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_float51(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr51(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_long5_selected(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_long5(row, pstr, pstr2, location, data, minValue, maxValue) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_bool_selected(row, pstr, pstr2, location, data) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, '>', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
+#define lcd_implementation_drawmenu_setting_edit_bool(row, pstr, pstr2, location, data) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, ' ', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
 
 //Add version for callback functions
-#define lcd_implementation_drawmenu_setting_edit_callback_int3_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', itostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_int3(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', itostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float3_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float3(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr3(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float32_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr32(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float32(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr32(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float5_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float5(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float52_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr52(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float52(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr52(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float51_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr51(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_float51(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr51(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_long5_selected(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_long5(row, pstr, pstr2, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
-#define lcd_implementation_drawmenu_setting_edit_callback_bool_selected(row, pstr, pstr2, data, callback) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, '>', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
-#define lcd_implementation_drawmenu_setting_edit_callback_bool(row, pstr, pstr2, data, callback) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, ' ', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
+#define lcd_implementation_drawmenu_setting_edit_callback_int3_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', itostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_int3(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', itostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float3_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float3(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr3(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float32_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr32(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float32(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr32(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float5_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float5(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float52_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr52(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float52(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr52(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float51_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr51(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_float51(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr51(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_long5_selected(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, '>', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_long5(row, pstr, pstr2, location, data, minValue, maxValue, callback) lcd_implementation_drawmenu_setting_edit_generic(row, pstr, ' ', ftostr5(*(data)))
+#define lcd_implementation_drawmenu_setting_edit_callback_bool_selected(row, pstr, pstr2, location, data, callback) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, '>', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
+#define lcd_implementation_drawmenu_setting_edit_callback_bool(row, pstr, pstr2, location, data, callback) lcd_implementation_drawmenu_setting_edit_generic_P(row, pstr, ' ', (*(data))?PSTR(MSG_ON):PSTR(MSG_OFF))
 
 void lcd_implementation_drawedit(const char* pstr, char* value)
 {
@@ -466,7 +1160,7 @@ void lcd_implementation_drawedit(const char* pstr, char* value)
 		u8g.print(value);
 }
 
-static void lcd_implementation_drawmenu_sdfile_selected(uint8_t row, const char* pstr, const char* filename, char* longFilename)
+static void lcd_implementation_drawmenu_sdfile_selected(uint8_t row, const char* pstr, char location, const char* filename, char* longFilename)
 {
     char c;
     uint8_t n = LCD_WIDTH - 1;
@@ -495,7 +1189,7 @@ static void lcd_implementation_drawmenu_sdfile_selected(uint8_t row, const char*
 	u8g.setColorIndex(1);		// black on white
 }
 
-static void lcd_implementation_drawmenu_sdfile(uint8_t row, const char* pstr, const char* filename, char* longFilename)
+static void lcd_implementation_drawmenu_sdfile(uint8_t row, const char* pstr, char location, const char* filename, char* longFilename)
 {
     char c;
     uint8_t n = LCD_WIDTH - 1;
@@ -522,7 +1216,7 @@ while((c = *filename) != '\0')
 
 }
 
-static void lcd_implementation_drawmenu_sddirectory_selected(uint8_t row, const char* pstr, const char* filename, char* longFilename)
+static void lcd_implementation_drawmenu_sddirectory_selected(uint8_t row, const char* pstr, char location, const char* filename, char* longFilename)
 {
     char c;
     uint8_t n = LCD_WIDTH - 2;
@@ -552,7 +1246,7 @@ static void lcd_implementation_drawmenu_sddirectory_selected(uint8_t row, const 
 	u8g.setColorIndex(1);		// black on white
 }
 
-static void lcd_implementation_drawmenu_sddirectory(uint8_t row, const char* pstr, const char* filename, char* longFilename)
+static void lcd_implementation_drawmenu_sddirectory(uint8_t row, const char* pstr, char location, const char* filename, char* longFilename)
 {
     char c;
     uint8_t n = LCD_WIDTH - 2;
@@ -579,14 +1273,16 @@ static void lcd_implementation_drawmenu_sddirectory(uint8_t row, const char* pst
 			   }
 }
 
-#define lcd_implementation_drawmenu_back_selected(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, LCD_STR_UPLEVEL[0], LCD_STR_UPLEVEL[0])
-#define lcd_implementation_drawmenu_back(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, ' ', LCD_STR_UPLEVEL[0])
-#define lcd_implementation_drawmenu_submenu_selected(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, '>', LCD_STR_ARROW_RIGHT[0])
-#define lcd_implementation_drawmenu_submenu(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, ' ', LCD_STR_ARROW_RIGHT[0])
-#define lcd_implementation_drawmenu_gcode_selected(row, pstr, gcode) lcd_implementation_drawmenu_generic(row, pstr, '>', ' ')
-#define lcd_implementation_drawmenu_gcode(row, pstr, gcode) lcd_implementation_drawmenu_generic(row, pstr, ' ', ' ')
-#define lcd_implementation_drawmenu_function_selected(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, '>', ' ')
-#define lcd_implementation_drawmenu_function(row, pstr, data) lcd_implementation_drawmenu_generic(row, pstr, ' ', ' ')
+//New T Menus -j
+
+#define lcd_implementation_drawmenu_back_selected(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, LCD_STR_UPLEVEL[0], LCD_STR_UPLEVEL[0])
+#define lcd_implementation_drawmenu_back(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, ' ', LCD_STR_UPLEVEL[0])
+#define lcd_implementation_drawmenu_submenu_selected(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, '>', ' ')
+#define lcd_implementation_drawmenu_submenu(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, ' ', ' ')
+#define lcd_implementation_drawmenu_gcode_selected(row, pstr, location, gcode) lcd_implementation_drawmenu_generic(row, pstr, location, '>', ' ')
+#define lcd_implementation_drawmenu_gcode(row, pstr, location, gcode) lcd_implementation_drawmenu_generic(row, pstr, location, ' ', ' ')
+#define lcd_implementation_drawmenu_function_selected(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, '>', ' ')
+#define lcd_implementation_drawmenu_function(row, pstr, location, data) lcd_implementation_drawmenu_generic(row, pstr, location, ' ', ' ')
 
 static void lcd_implementation_quick_feedback()
 {

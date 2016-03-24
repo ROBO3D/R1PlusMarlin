@@ -603,10 +603,10 @@
       #define LCD_PINS_D7 29
 
       #ifdef REPRAP_DISCOUNT_SMART_CONTROLLER
-        #define BEEPER 37
-
-        #define BTN_EN1 31
-        #define BTN_EN2 33
+        #define BEEPER -1
+        //#define LCD_SCREEN_ROT_180
+        #define BTN_EN1 33
+        #define BTN_EN2 31
         #define BTN_ENC 35
 
         #define SDCARDDETECT 49
@@ -1105,9 +1105,9 @@
        // GLCD features
        #define LCD_CONTRAST 1
        // Uncomment screen orientation
-         // #define LCD_SCREEN_ROT_0
+          #define LCD_SCREEN_ROT_0
          // #define LCD_SCREEN_ROT_90
-       #define LCD_SCREEN_ROT_180
+       //#define LCD_SCREEN_ROT_180
          // #define LCD_SCREEN_ROT_270
        #else // standard Hitachi LCD controller
        #define LCD_PINS_RS        4

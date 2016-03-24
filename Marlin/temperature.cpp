@@ -507,7 +507,7 @@ void manage_heater()
         #endif
       }
     #endif
-    #ifdef TEMP_SENSOR_DISCONNECT_CHECK
+    /*#ifdef TEMP_SENSOR_DISCONNECT_CHECK
       if(current_temperature[e] > hot_temperature[e])
          hot_temperature[e] = current_temperature[e];
       if(hot_temperature[e] > target_temperature[e])
@@ -522,7 +522,7 @@ void manage_heater()
 	#endif
 	hot_temperature[e]=0;
      }
-   #endif 
+   #endif */
   } // End extruder for loop
 
   #if (defined(EXTRUDER_0_AUTO_FAN_PIN) && EXTRUDER_0_AUTO_FAN_PIN > -1) || \

@@ -40,7 +40,7 @@ void _EEPROM_readData(int &pos, uint8_t* value, uint8_t size)
 #ifdef DELTA
 #define EEPROM_VERSION "V11"
 #else
-#define EEPROM_VERSION "V10"
+#define EEPROM_VERSION "V13"
 #endif
 
 #ifdef EEPROM_SETTINGS
@@ -61,6 +61,8 @@ void Config_StoreSettings()
   EEPROM_WRITE_VAR(i,max_z_jerk);
   EEPROM_WRITE_VAR(i,max_e_jerk);
   EEPROM_WRITE_VAR(i,add_homeing);
+  EEPROM_WRITE_VAR(i,encoder_steps_per_menu_item);
+  EEPROM_WRITE_VAR(i,encoder_pulses_per_step);
   #ifdef DELTA
   EEPROM_WRITE_VAR(i,endstop_adj);
   EEPROM_WRITE_VAR(i,delta_radius);
@@ -212,6 +214,8 @@ void Config_RetrieveSettings()
         EEPROM_READ_VAR(i,max_z_jerk);
         EEPROM_READ_VAR(i,max_e_jerk);
         EEPROM_READ_VAR(i,add_homeing);
+        EEPROM_READ_VAR(i,encoder_steps_per_menu_item);
+        EEPROM_READ_VAR(i,encoder_pulses_per_step);
         #ifdef DELTA
 		EEPROM_READ_VAR(i,endstop_adj);
 		EEPROM_READ_VAR(i,delta_radius);
@@ -280,6 +284,8 @@ void Config_ResetDefault()
     max_z_jerk=DEFAULT_ZJERK;
     max_e_jerk=DEFAULT_EJERK;
     add_homeing[0] = add_homeing[1] = add_homeing[2] = 0;
+    encoder_steps_per_menu_item=DEFAULT_ENCODER_STEPS_PER_MENU_ITEM;
+    encoder_pulses_per_step=DEFAULT_ENCODER_PULSES_PER_STEP;
 #ifdef DELTA
 	endstop_adj[0] = endstop_adj[1] = endstop_adj[2] = 0;
 	delta_radius= DELTA_RADIUS;
@@ -296,7 +302,7 @@ void Config_ResetDefault()
     absPreheatFanSpeed = ABS_PREHEAT_FAN_SPEED;
 #endif
 #ifdef ENABLE_AUTO_BED_LEVELING
-zprobe_zoffset = -Z_PROBE_OFFSET_FROM_EXTRUDER;
+    zprobe_zoffset = -Z_PROBE_OFFSET_FROM_EXTRUDER;
 #endif
 #ifdef DOGLCD
     lcd_contrast = DEFAULT_LCD_CONTRAST;

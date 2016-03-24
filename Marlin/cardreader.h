@@ -19,6 +19,7 @@ public:
 
   void checkautostart(bool x); 
   void openFile(char* name,bool read,bool replace_current=true);
+  void getTimeEstimate();
   void openLogFile(char* name);
   void removeFile(char* name);
   void closefile(bool store_location=false);
@@ -51,9 +52,11 @@ public:
   bool saving;
   bool logging;
   bool sdprinting ;  
+  bool changingFilament;
   bool cardOK ;
   char filename[13];
   char longFilename[LONG_FILENAME_LENGTH];
+  int timeEstimate;
   bool filenameIsDir;
   int lastnr; //last number of the autostart;
 private:
